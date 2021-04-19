@@ -23,7 +23,7 @@ async function listAll(req, res) {
 async function create(req, res, next) {
     let data = {...req.body};
 
-    console.log(data)
+    console.log(data.req.file)
     if (req.file) {
         data.img= req.file.filename
     }

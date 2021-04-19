@@ -10,8 +10,7 @@ const MySQLStore = require('express-mysql-session')(session);
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const { json } = require('express');
-
-
+const cors = require('cors');
 
 // inicio
 const storage= multer.diskStorage({
@@ -22,7 +21,7 @@ const storage= multer.diskStorage({
 })
 
 const app =express();
-
+app.use(cors())
 
 //configuracion
 app.set('port',process.env.PORT || 5000);
@@ -69,7 +68,6 @@ app.use(multer({
 
 passport.use(passportMiddleware);
 
-
 //Rutas
 // app.use(require('./routes'));
 // app.use(require('./routes/authentication'));
@@ -77,6 +75,7 @@ passport.use(passportMiddleware);
 //Rutas api
 app.use('/api/noticias',require('./routes/api/noticia'))
 app.use('/api/users',require('./routes/api/user'))
+app.use('/api/products',require('./routes/api/products'))
 
 
 app.listen(app.get('port'),()=>{
