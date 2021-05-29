@@ -77,6 +77,9 @@ app.use('/api/noticias',require('./routes/api/noticia'))
 app.use('/api/users',require('./routes/api/user'))
 app.use('/api/products',require('./routes/api/products'))
 
+//rutas para parcial
+app.use('/api/carservices',require('./routes/api/carservices'))
+
 
 app.listen(app.get('port'),()=>{
     console.log('server on port', app.get('port'));    

@@ -5,23 +5,34 @@ const bycrypt = require('bcryptjs')
 module.exports = function () {
 
     async function listAll(callback) {
-        let query = "SELECT *, (select name from lineas where id= pr.lineasid) as nomlinea,  (SELECT ROUND(AVG(valoracion),0) FROM rating WHERE id_producto=pr.id) AS rating FROM productos as pr"
+        let query = "SELECT * FROM carros"
         await pool.query(query, [],
             (error, results, fields) => {
                 if(error){
                     return callback(error)
                 }
-                console.log(results)
                 return callback(null, results)
             }
         )
     }
-
-    async function getUserId(id) {
-        let query = "SELECT * FROM users WHERE id=?"
-        const result= await pool.query(query, [id]);
+    
+    
+    async function getCarPlaca(placa) {
+        let query = "SELECT * FROM atencion_car WHERE placa=?"
+        const result= await pool.query(query, [placa]);
         return result;
     }
+
+
+
+    // router.delete('/eliminar/:id_dtp',async(req,res)=>{
+    //     const sql ="DELETE FROM rh WHERE id_dtp=?";
+    //     await pool.query(sql, req.params.id_dtp);
+    //     res.sendStatus(200);
+    
+    //  });
+
+
 
     async function getUserEmail(email) {
         let query = "SELECT * FROM users WHERE email=?"
@@ -30,7 +41,7 @@ module.exports = function () {
     }
 
     async function create(data, callback) {
-        let query = 'INSERT INTO users SET ?';
+        let query = 'INSERT INTO productos SET ?';
         await pool.query(query,
             [data],
             (error, result, fields) => {
@@ -91,7 +102,7 @@ module.exports = function () {
 
     return {
         listAll,
-        getUserId,
+        getCarPlaca,
         getUserEmail,
         create,
         update,
